@@ -1,0 +1,23 @@
+# Import the function to split data into training and test sets
+from sklearn.model_selection import train_test_split
+
+# Drop rows where the target column 'loan_status' is missing
+# This is important because missing target values can't be used for training or testing
+df = df.dropna(subset=['loan_status'])
+
+# Separate the features (input variables) from the target (label to predict)
+# X will contain all columns except 'loan_status'
+# y will contain only the 'loan_status' column
+X = df.drop(columns='loan_status')
+y = df['loan_status']
+
+# Split the dataset into training and testing sets
+# test_size=0.2 means 20% of the data goes to the test set and 80% to the training set
+# random_state=42 ensures the split is reproducible every time the code is run
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Print the shape (dimensions) of each dataset to confirm the split
+print("Training features shape:", X_train.shape)  # Rows and columns in X_train
+print("Training labels shape:", y_train.shape)    # Number of labels in y_train
+print("Test features shape:", X_test.shape)       # Rows and columns in X_test
+print("Test labels shape:", y_test.shape)         # Number of labels in y_test
