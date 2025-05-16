@@ -1,0 +1,32 @@
+import pandas as pd  # Import pandas for data handling
+
+# Set your file path to the CSV file on your Desktop
+file_path = r"C:\Users\rajat\OneDrive\Desktop\loan_data (1).csv"
+
+try:
+    # Load the dataset from the specified path
+    df = pd.read_csv(file_path)
+
+    # Create a new binary column 'default': 1 if risky status, else 0
+    df['default'] = df['loan_status'].apply(
+        lambda x: 1 if x in ['Charged Off', 'Default', 'Late (31-120 days)', 'Late (16-30 days)'] else 0
+    )
+
+    # Print the count of defaults (1) vs non-defaults (0)
+    print("Default variable distribution:")
+    print(df['default'].value_counts())
+
+    # Print how many loans fall into each original loan_status category
+    print("\nLoan status distribution:")
+    print(df['loan_status'].value_counts())
+
+except FileNotFoundError:
+    # Print a helpful message if the file path is incorrect or file is missing
+    print("File not found. Please check the file path.")
+
+except Exception as e:
+    # Catch and print any other unexpected errors
+    print(f"An error occurred: {e}")
+
+print(df['loan_status'].value_counts())
+
